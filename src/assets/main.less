@@ -1,0 +1,395 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  background: #F0F0F0;
+  /* min-width: 1200px; */
+  /* min-height: 800px; */
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+li{
+  list-style: none;
+}
+/* 修改滚动条样式 */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(64, 158, 255, 1);
+  background: rgba(64, 158, 255, 1);
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(64, 158, 255, 0.3);
+  border-radius: 0;
+  background: rgba(64, 158, 255, 0.3);
+}
+
+
+
+.page_main {
+  display: flex;
+  padding: 20px 0;
+  justify-content: flex-end;
+}
+.page_pagination{
+  display: flex;
+  padding:0 20px 20px 20px;
+  justify-content: flex-end;
+}
+
+.page_con {
+  .page_header {
+    display: flex;
+    align-items: center;
+    padding-left: 32px;
+    height: 48px;
+    background: #fff;
+  }
+
+  .search_card {
+    display: flex;
+    padding: 20px 20px 0 20px;
+    align-items: center;
+    //height: 68px;
+    background: #fff;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    justify-content: space-between;
+    .el-input {
+      width: 200px;
+    }
+  }
+
+  .span_pr16 {
+    display: inline-block;
+    padding-right: 16px;
+  }
+}
+
+.page_main_content {
+  padding: 20px 24px;
+  .main-content{
+    background: #fff;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    .tableContent {
+      position: relative;
+      padding: 20px;
+      margin-top: 16px;
+      height: calc(100vh - 280px);
+      
+      overflow: auto;
+
+      .table_btn {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 16px;
+      }
+    }
+  }
+  
+}
+
+.page_title {
+  span {
+    display: inline-block;
+    margin-right: 10px;
+    width: 6px;
+    height: 16px;
+    background: #0071DB;
+    vertical-align: bottom;
+  }
+
+  font-size: 16px;
+  color: #3D3D3D;
+}
+
+.page_form {
+  padding: 20px;
+
+  .el-form-item__content {
+    width: 70%;
+  }
+
+  .el-select {
+    width: 100%;
+  }
+
+  .el-form-item {
+    width: 32%;
+  }
+
+  .form_block {
+    width: 100%;
+  }
+}
+
+.form_butn {
+  position: absolute;
+  padding-right: 24px;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  height: 60px;
+  line-height: 60px;
+  background: #fff;
+  text-align: right;
+  box-shadow: 0px -6px 10px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+  box-sizing: border-box;
+  z-index: 55;
+
+  button {
+    width: 96px;
+    margin-right: 8px;
+  }
+
+  .el-button+.el-button {
+    margin-left: 0 !important;
+  }
+}
+
+.page_form_personnel {
+  .el-form-item__content {
+    width: 68%;
+  }
+
+  .el-select {
+    width: 100%;
+  }
+
+  .el-form-item {
+    width: 46%;
+  }
+
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    background: #F0F0F0;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 206px;
+    height: 266px;
+    line-height: 266px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 206px;
+    height: 266px;
+    display: block;
+  }
+
+  .form_block {
+    width: 100%;
+  }
+}
+
+.my-label {
+  text-align: center !important;
+  font-size: 16px !important;
+  color: #6d6d6d !important;
+  background: #f0f0f0 !important;
+}
+
+.el-descriptions .is-bordered .el-descriptions-item__cell {
+  border: 1px solid #E5E5E5 !important;
+}
+
+// .el-button--primary {
+//   color: #fff !important;
+//   background-color: #0071DB !important;
+//   border-color: #0071DB !important;
+// }
+
+.el-tag {
+  margin-right: 10px;
+  width: 68px !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.el-tag--plain {
+  background-color: #EBF2FD !important;
+  border-color: #EBF2FD !important;
+  color: #4798E5 !important;
+}
+
+.el-tag--dark {
+  background-color: #0071DB !important;
+  border-color: #0071DB !important;
+}
+
+.el-table thead th.el-table__cell {
+
+  background: #f5f7fa !important;
+}
+
+.add_dialog_con {
+
+  .time_form {
+    position: relative;
+
+    .el-date-editor--daterange.el-input__inner {
+      width: 226px !important;
+    }
+
+    .el-input {
+      width: 140px !important;
+    }
+  }
+
+}
+
+// 正在建设中
+.development_page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 24px;
+  background: #fff;
+  height: calc(100vh - 160px);
+}
+
+.page_search {
+  display: flex;
+  width: 100%;
+  padding: 16px 32px;
+  background: #fff;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+::v-deep .el-dialog--center {
+  border-radius: 4px !important;
+}
+
+
+.search_card {
+  height: auto;
+  flex-wrap: wrap;
+
+  .search_card_top {
+    margin-bottom: 16px;
+  }
+}
+
+.span_pr16 {
+  margin-bottom: 20px;
+}
+
+.tableContent {
+  position: relative;
+}
+
+.formlist_title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  .flt_left {
+      display: flex;
+      align-items: center;
+
+      span {
+          width: 6px;
+          height: 16px;
+          background: #2E73FE;
+          border-top-right-radius: 2px;
+          border-bottom-right-radius: 2px;
+      }
+
+      h5 {
+          margin-left: 8px;
+          font-size: 18px;
+          color: rgba(0, 0, 0, 0.85);
+      }
+  }
+}
+
+/**
+自定义dialog头样式
+ */
+.dialog-title--global{
+  color:#262626;
+  font-weight: 500;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  &:before{
+    content:"";
+    width:6px;
+    height: 16px;
+    background-color: #2E73FE;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    display: block;
+    margin-right: 6px;
+
+  }
+  
+}
+i.el-tooltip__trigger {
+  color: rgba(0,0,0,0.3);
+}
+.list_ul {
+  display: flex;
+
+  li {
+      margin: 6px 10px 0 0;
+      width: 32%;
+  }
+
+  li.delet_li {
+      width: 28px;
+      height: 28px;
+      line-height: 22px;
+      text-align: center;
+      border: 1px dashed #EA0000;
+      flex-shrink: 0;
+      cursor: pointer;
+      span {
+          display: inline-block;
+          width: 12px;
+          height: 2px;
+          background: #EA0000;
+      }
+  }
+}
+
+.table_add {
+  margin-top: 6px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 14px;
+  color: #2E73FE;
+  text-align: center;
+  border: 1px dashed #2E73FE;
+  cursor: pointer;
+
+}

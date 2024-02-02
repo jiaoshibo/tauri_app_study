@@ -1,0 +1,747 @@
+<!--
+ * @Author: jiaxiaorong jiaxiaorong@syngo.net
+ * @Date: 2023-10-26 09:35:21
+ * @LastEditors: jiaxiaorong jiaxiaorong@syngo.net
+ * @LastEditTime: 2023-10-26 14:52:29
+ * @FilePath: \syngo-yckt-matter-library-web\src\views\MatterChange\VersionModification.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<script setup lang="ts">
+import { ref, onBeforeMount, reactive } from 'vue';
+import Layout from '@/components/ListPageLayout.vue'
+import ArchorList from '@/components/ArchorList.vue'
+import IsogenyvBasicForm from '../MatterDetails/components/IsogenyvBasicForm.vue'
+import ConditionDialog from '../MatterDetails/components/CelatedIssuesCom.vue'
+import RemindCom from '../MatterDetails/components/RemindCom.vue'
+import AuditMethodCom from '../MatterDetails/components/AuditMethodCom.vue'
+import IsogenyMatterFlow from '../MatterDetails/components/IsogenyMatterFlow.vue'
+import IsogenyResult from '../MatterDetails/components/IsogenyResult.vue'
+import IsogenyAccording from '../MatterDetails/components/IsogenyAccording.vue'
+import IsogenyvProblem from '../MatterDetails/components/IsogenyvProblem.vue'
+import KnowledgeCom from '../MatterDetails/components/KnowledgeCom.vue'
+import CaseCom from '../MatterDetails/components/CaseCom.vue'
+
+import {
+    WarnTriangleFilled,
+    QuestionFilled
+} from '@element-plus/icons-vue'
+
+const matterLiData = ref<{ id: number, name: string }[]>([{
+    id: 0,
+    name: "初次申请排水许可，月用水量在200立方米"
+}, {
+    id: 1,
+    name: "初次申请排水许可，月用水量在200立方米"
+}, {
+    id: 2,
+    name: "初次申请排水许可，月用水量在200立方米"
+}])
+
+const matterIsActive = ref<number>(0)
+
+// 事项li点击
+const matterLiClick = (id: number) => {
+    matterIsActive.value = id;
+}
+//左侧边栏数据
+const archorData = ref<{ id: string; name: string }[]>([{
+    id: "id1",
+    name: "事项基本信息"
+}, {
+    id: "id2",
+    name: "受理标准"
+}, {
+    id: "id3",
+    name: "办理流程"
+}, {
+    id: "id4",
+    name: "进厅准备"
+}, {
+    id: "id5",
+    name: "预约需求"
+}, {
+    id: "id6",
+    name: "结果物名称及样本"
+}, {
+    id: "id7",
+    name: "设定依据"
+}, {
+    id: "id8",
+    name: "收费标准"
+}, {
+    id: "id9",
+    name: "常见问题"
+}, {
+    id: "id10",
+    name: "知识库问答"
+}, {
+    id: "id11",
+    name: "案例库"
+}])
+
+const matterMaterial = ref([{
+    materialName: "11111",
+    matterPoints: [{
+        pointName: "1111",
+        openness: "1111",
+        fallibility: "1111",
+        remind: "1111",
+    }]
+}])
+
+const fallibilityOptions = [{
+    value: 0,
+    label: '否'
+}, {
+    value: 1,
+    label: '是'
+}]
+
+//删除填写要点
+const deleteClick = (...args:any[]) => { }
+//添加填写要点
+const addTableRow = (...args:any[]) => { }
+
+//进厅准备
+const matterReady = {
+    matterId: "",
+    situationId: "",
+    middleWeb: "",
+    windowsWeb: "",
+    matterTeacherName: "",
+    matterTeacherJob: "",
+    officePrincipalName: "",
+    chiefRepresentName: "",
+    replacePer: "",
+}
+//中台专网
+const signOptions = [{
+    value: "1",
+    label: "是"
+}, {
+    value: "0",
+    label: "否"
+}]
+//预约需求
+const matterPrecontract = {
+    matterId: "",
+    situationId: "",
+    matterTicketLimite: "",
+    matterTicketNumber: "",
+    matterMiniExplain: "",
+    matterMachineExplain: "",
+    windowsExplain: "",
+}
+
+//收费标准
+const matterChargeInfo = {
+    isFee: "",
+    byLaw: ""
+}
+</script>
+
+<template>
+    <Layout :breadcrumb-item="['事项异动', '版本修改']">
+        <div class="vm_top">
+            <div class="vm_top_tip">
+                <el-icon>
+                    <WarnTriangleFilled />
+                </el-icon>
+                <h5>提示</h5>
+                <span>当前事项中的事项办理名称“城镇污水排入排水管网”变更为“城镇污水排入排水管网许可”，请核查以下字段：</span>
+            </div>
+            <ul>
+                <li>中台专网</li>
+                <li>中台专网</li>
+                <li>中台专网</li>
+                <li>中台专网</li>
+                <li>中台专网</li>
+                <li>中台专网</li>
+                <li>中台专网</li>
+                <li>中台专网</li>
+            </ul>
+        </div>
+        <div class="vm_form_con">
+            <div class="detaill_title">
+                <h5>城镇污水排入排水管网许可</h5>
+                <div class="title_right">
+                    <span><label style="color:#409EFF">*</label> 为首都之窗同源数据</span>
+                    <span><label style="color:#F56C6C">*</label> 为必填项</span>
+                </div>
+            </div>
+            <div class="matter_form_card">
+                <ul class="matter_ul">
+                    <li v-for="item in matterLiData" :key="item.id" :class="{ 'matter_active': matterIsActive === item.id }"
+                        @click="matterLiClick(item.id)">{{ item.name }}</li>
+                </ul>
+                <div class="matter_info_con">
+                    <div class="info_lef">
+                        <ArchorList :archorData="archorData"></ArchorList>
+                    </div>
+                    <div class="info_right">
+                        <!-- 事项基本信息 -->
+                        <div id="id1">
+                            <div class="formlist_title">
+                                <div class="flt_left">
+                                    <span></span>
+                                    <h5>事项基本信息</h5>
+                                </div>
+                                <div class="flt_right">
+                                    <el-button type="primary">完成</el-button>
+                                </div>
+                            </div>
+                            <IsogenyvBasicForm></IsogenyvBasicForm>
+                        </div>
+                        <!-- 受理标准 -->
+                        <div id="id2">
+                            <div class="formlist_title">
+                                <div class="flt_left">
+                                    <span></span>
+                                    <h5>受理标准</h5>
+                                </div>
+                                <div class="flt_right">
+                                    <el-button type="primary">完成</el-button>
+                                </div>
+                            </div>
+                            <!-- 相关事项 -->
+                            <div class="formList_card">
+                                <div class="formList_card_title">
+                                    <h5>相关事项</h5>
+                                    <el-tooltip class="item" effect="dark"
+                                        content="相关事项为办理此事项前，提醒办事人需办理哪些事项的提醒内容，查询选择事项库确认相关事项。" placement="top">
+                                        <el-icon>
+                                            <QuestionFilled />
+                                        </el-icon>
+                                    </el-tooltip>
+                                </div>
+                                <ConditionDialog></ConditionDialog>
+                            </div>
+                            <!-- 审核信息 -->
+                            <div class="formList_card">
+                                <div class="formList_card_title">
+                                    <h5>审核信息</h5>
+                                </div>
+                                <div class="bac_audit">
+                                    <AuditMethodCom></AuditMethodCom>
+                                </div>
+                            </div>
+                            <!-- 重点提醒 -->
+                            <div class="formList_card">
+                                <div class="formList_card_title">
+                                    <h5>重点提醒</h5>
+                                    <el-tooltip class="item" effect="dark"
+                                        content="公示：即内容有政策依据，且办事人可查询到该政策依据。告知：即提醒内容有政策依据，政策依据外网查询不到但可向办事人展示该政策文本文件。解释：提醒内容无明文规定或有相关保密要求，只可口头向办事人说明。"
+                                        placement="top">
+                                        <el-icon>
+                                            <QuestionFilled />
+                                        </el-icon>
+                                    </el-tooltip>
+                                </div>
+                                <RemindCom></RemindCom>
+                                <div class="series_quadrat">
+                                    <h5>重点提醒填写样例</h5>
+                                    <ul>
+                                        <li>具体提醒内容具体提醒内容</li>
+                                        <li>示例提醒内容</li>
+                                        <li>公告</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- 材料清单 -->
+                            <div class="formList_card">
+                                <div class="formList_card_title">
+                                    <h5>材料清单</h5>
+                                </div>
+                                <el-table :data="matterMaterial" border>
+                                    <el-table-column prop="materialName">
+                                        <template #header>
+                                            <span>
+                                                <i style="color: #409EFF">*</i>材料名称
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="materialName">
+                                        <template #header>
+                                            <span>
+                                                <i style="color: #409EFF">*</i>材料来源
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="materialName">
+                                        <template #header>
+                                            <span>
+                                                <i style="color: #409EFF">*</i>材料必要性
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="materialName">
+                                        <template #header>
+                                            <span>
+                                                <i style="color: #409EFF">*</i>数量要求
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="materialName">
+                                        <template #header>
+                                            <span>
+                                                <i style="color: #409EFF">*</i>介质要求
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="materialName">
+                                        <template #header>
+                                            <span>
+                                                <i style="color: #409EFF">*</i>样表
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="materialName">
+                                        <template #header>
+                                            <span>
+                                                <i style="color: #409EFF">*</i>空表
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="materialName">
+                                        <template #header>
+                                            <span>
+                                                <i style="color: #409EFF">*</i>受理标准
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="materialName">
+                                        <template #header>
+                                            <span>
+                                                <i style="color: #409EFF">*</i>提供材料依据
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="materialName">
+                                        <template #header>
+                                            <span>
+                                                <i style="color: #409EFF">*</i>其他要求
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column fixed="right" width="600">
+                                        <template #header>
+                                            <span>
+                                                受理要点
+                                                <el-tooltip class="item" effect="dark"
+                                                    content=" 受理要点为接件过程中窗口人员对办事人提交材料的材料接件要求。可公示的受理要点可向办事人展示，内部受理要点是窗口人员可见但因政策或其它原因办事人不可见内容。受理要点是否可公示，以该受理要点是否有可公示政策依据为准。"
+                                                    placement="top">
+                                                    <el-icon>
+                                                        <QuestionFilled />
+                                                    </el-icon>
+                                                </el-tooltip>
+                                            </span>
+                                        </template>
+                                        <template #default="scope">
+                                            <el-table :data="scope.row.matterPoints" border>
+                                                <el-table-column label="受理要点">
+                                                    <template #default="scope">
+                                                        <el-input v-model="scope.row.pointName"></el-input>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column label="受理要点公开性">
+                                                    <template #default="scope">
+                                                        <el-select v-model="scope.row.openness" placeholder="请选择">
+                                                            <el-option v-for="item in opennessOptions" :key="item.value"
+                                                                :label="item.label" :value="item.value"></el-option>
+                                                        </el-select>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column label="填写点是否是易错点">
+                                                    <template #default="scope">
+                                                        <el-select v-model="scope.row.fallibility" placeholder="请选择">
+                                                            <el-option v-for="item in fallibilityOptions" :key="item.value"
+                                                                :label="item.label" :value="item.value"></el-option>
+                                                        </el-select>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column label="填写提醒">
+                                                    <template #default="scope">
+                                                        <el-input v-model="scope.row.remind"></el-input>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column fixed="right" label="操作">
+                                                    <template #default="scope1">
+                                                        <el-button @click="deleteClick(scope, scope1)" type="text"
+                                                            :disabled="scope.row.matterPoints.length == 1">删除</el-button>
+                                                    </template>
+                                                </el-table-column>
+                                            </el-table>
+                                            <div class="table_add" @click="addTableRow(scope)">
+                                                + 添加受理要点
+                                            </div>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                            </div>
+                            <!-- 办理流程 -->
+                            <div class="formList_card">
+                                <div class="formlist_title">
+                                    <div class="flt_left">
+                                        <span></span>
+                                        <h5>办理流程</h5>
+                                    </div>
+                                    <div class="flt_right">
+                                        <el-button type="primary">查看流程图</el-button>
+                                    </div>
+                                </div>
+                                <IsogenyMatterFlow></IsogenyMatterFlow>
+                            </div>
+                            <!-- 进厅准备 -->
+                            <div class="formList_card">
+                                <div class="formlist_title">
+                                    <div class="flt_left">
+                                        <span></span>
+                                        <h5>进厅准备</h5>
+                                    </div>
+                                    <div class="flt_right">
+                                        <el-button type="primary">完成</el-button>
+                                    </div>
+                                </div>
+                                <el-form :model="matterReady" :inline="true" label-width="140px" class="demo-ruleForm">
+                                    <div class="form_item_flex">
+                                        <el-form-item label="中台专网：">
+                                            <el-select v-model="matterReady.middleWeb" placeholder="请选择">
+                                                <el-option v-for="item in signOptions" :key="item.value" :label="item.label"
+                                                    :value="item.value">
+                                                </el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                        <el-form-item label="窗口专网：">
+                                            <el-select v-model="matterReady.windowsWeb" placeholder="请选择">
+                                                <el-option v-for="item in signOptions" :key="item.value" :label="item.label"
+                                                    :value="item.value">
+                                                </el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                    </div>
+                                    <div class="form_item_flex">
+                                        <el-form-item label="事项负责老师姓名：">
+                                            <el-input v-model="matterReady.matterTeacherName"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="事项负责老师岗位：">
+                                            <el-input v-model="matterReady.matterTeacherJob"></el-input>
+                                        </el-form-item>
+                                    </div>
+                                    <div class="form_item_flex">
+                                        <el-form-item label="处室领导：">
+                                            <el-input v-model="matterReady.officePrincipalName"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="首席代表：">
+                                            <el-input v-model="matterReady.chiefRepresentName"></el-input>
+                                        </el-form-item>
+                                    </div>
+                                    <div class="form_item_flex">
+                                        <el-form-item label="代岗人员姓名：">
+                                            <el-input v-model="matterReady.replacePer"></el-input>
+                                        </el-form-item>
+                                    </div>
+                                </el-form>
+                            </div>
+                            <!-- 预约需求 -->
+                            <div class="formList_card">
+                                <div class="formlist_title">
+                                    <div class="flt_left">
+                                        <span></span>
+                                        <h5>预约需求</h5>
+                                    </div>
+                                    <div class="flt_right">
+                                        <el-button type="primary">完成</el-button>
+                                    </div>
+                                </div>
+                                <el-form :model="matterPrecontract" :inline="true" label-width="160px"
+                                    class="demo-ruleForm">
+                                    <div class="form_item_flex">
+                                        <el-form-item label="事项是否有号源限：" class="rest_form">
+                                            <el-radio-group v-model="matterPrecontract.matterTicketLimite">
+                                                <el-radio :label="1">是</el-radio>
+                                                <el-radio :label="0">否</el-radio>
+                                            </el-radio-group>
+                                        </el-form-item>
+                                        <el-form-item label="每日放号数量：">
+                                            <el-input v-model="matterPrecontract.matterTicketNumber"
+                                                type="number"></el-input>
+                                        </el-form-item>
+                                    </div>
+                                    <div class="form_item_flex">
+                                        <el-form-item label="公众号预约指导：" class="rest_form">
+                                            <el-upload class="upload-demo" :show-file-list="false">
+                                                <el-button>上传文件</el-button>
+                                                <div slot="tip" class="el-upload__tip">支持格式：.rar .zip .doc .docx
+                                                    .pdf，单个文件不能超过50MB</div>
+                                            </el-upload>
+
+                                        </el-form-item>
+                                        <el-form-item label="查询机预约指导：" class="rest_form">
+                                            <el-upload class="upload-demo" :show-file-list="false">
+                                                <el-button>上传文件</el-button>
+                                                <div slot="tip" class="el-upload__tip">支持格式：.rar .zip .doc .docx .pdf
+                                                    ，单个文件不能超过50MB</div>
+                                            </el-upload>
+
+                                        </el-form-item>
+                                    </div>
+                                    <div class="form_item_flex">
+                                        <el-form-item label="窗口人员代预约指导：" class="rest_form">
+                                            <el-upload class="upload-demo" :show-file-list="false">
+                                                <el-button>上传文件</el-button>
+                                                <div slot="tip" class="el-upload__tip">支持格式：.rar .zip .doc .docx
+                                                    .pdf，单个文件不能超过50MB</div>
+                                            </el-upload>
+                                        </el-form-item>
+                                    </div>
+
+                                </el-form>
+                            </div>
+                            <!-- 结果物及样本 -->
+                            <div class="formList_card">
+                                <div class="formlist_title">
+                                    <div class="flt_left">
+                                        <span></span>
+                                        <h5>结果物及样本</h5>
+                                    </div>
+                                    <div class="flt_right">
+                                        <el-button type="primary">完成</el-button>
+                                    </div>
+                                </div>
+                                <IsogenyResult :is-eidit="true" :syncMatterResult="[]"></IsogenyResult>
+                            </div>
+                            <!-- 设定依据 -->
+                            <div class="formList_card">
+                                <div class="formList_card_title">
+                                    <h5>设定依据</h5>
+                                </div>
+                                <IsogenyAccording></IsogenyAccording>
+                            </div>
+                            <!-- 收费标准 -->
+                            <div class="formList_card">
+                                <div class="formList_card_title">
+                                    <h5>收费标准</h5>
+                                </div>
+                                <el-form :model="matterChargeInfo" label-width="160px" class="demo-ruleForm">
+                                    <div class="form_item_flex">
+                                        <el-form-item label="是否收费：" class="rest_form add_symbol">
+                                            <el-radio-group v-model="matterChargeInfo.isFee">
+                                                <el-radio label="1">是</el-radio>
+                                                <el-radio label="0">否</el-radio>
+                                            </el-radio-group>
+                                        </el-form-item>
+                                        <el-form-item label="收费标准：" class="rest_form add_symbol">
+                                            <el-input v-model="matterChargeInfo.byLaw" disabled></el-input>
+                                        </el-form-item>
+                                    </div>
+                                </el-form>
+                            </div>
+                             <!-- 常见问题 -->
+                             <div class="formList_card">
+                                <div class="formList_card_title">
+                                    <h5>常见问题</h5>
+                                </div>
+                                <IsogenyvProblem></IsogenyvProblem>
+                            </div>
+                             <!-- 知识库问答 -->
+                             <div class="formList_card">
+                                <div class="formList_card_title">
+                                    <h5>知识库问答</h5>
+                                </div>
+                                <KnowledgeCom></KnowledgeCom>
+                            </div>
+                             <!-- 案例库 -->
+                             <div class="formList_card">
+                                <div class="formList_card_title">
+                                    <h5>案例库</h5>
+                                </div>
+                                <CaseCom></CaseCom>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Layout>
+</template>
+
+
+
+<style lang="less" scoped>
+.vm_top {
+    margin: 24px;
+    padding: 22px 24px;
+    background: #fff;
+
+    .vm_top_tip {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        color: #8A6543;
+        border-bottom: solid 2px #F1E9E7;
+
+        h5 {
+            margin: 0 16px 0 8px;
+            font-size: 20px;
+        }
+
+        span {
+            font-size: 14px;
+        }
+    }
+
+    ul {
+        display: flex;
+
+        li {
+            margin: 30px 16px 0 0;
+            padding: 6px 12px;
+            font-size: 16px;
+            color: #6C390A;
+            background: #FFF3E8;
+        }
+    }
+}
+
+.vm_form_con {
+    margin: 24px;
+    height: calc(100vh - 340px);
+    overflow: auto;
+
+    .detaill_title {
+        display: flex;
+        justify-content: space-between;
+        padding: 24px 20px 20px;
+        border-bottom: solid 1px #F0F4FA;
+        background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 44%);
+
+        h5 {
+            font-size: 20px;
+            color: #262626;
+        }
+
+        .title_right {
+            font-size: 14px;
+            color: #3D3D3D;
+        }
+    }
+}
+
+.matter_ul {
+    display: flex;
+
+    li {
+        padding: 15px 30px;
+        margin-right: 16px;
+        color: #262626;
+        font-size: 16px;
+        background: #F5F7FC;
+        cursor: pointer;
+    }
+
+    li.matter_active {
+        color: #fff;
+        background: #2E73FE;
+    }
+}
+
+.matter_form_card {
+    padding: 24px 34px;
+    background: #fff;
+}
+
+.matter_info_con {
+    display: flex;
+    padding: 36px 24px;
+
+    .info_lef {
+        width: 190px;
+        flex-shrink: 0;
+    }
+
+
+    .info_right {
+        flex: 1;
+        overflow: auto;
+    }
+}
+
+.formList_card {}
+
+.formList_card_title {
+    display: flex;
+    align-items: center;
+    padding: 30px 0 10px;
+    color: rgba(0, 0, 0, 0.85);
+
+    h5 {
+        font-size: 16px;
+        margin-right: 4px;
+    }
+}
+
+.bac_audit {
+    background: #F9F9F9;
+}
+
+.series_quadrat {
+    margin-top: 10px;
+    padding: 12px 16px;
+    background: #F7F7F7;
+
+    h5 {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    ul {
+        display: flex;
+        margin-top: 12px;
+
+        li {
+            padding-left: 30px;
+            margin-right: 6px;
+            width: 32%;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.5);
+            background: #fff;
+            box-sizing: border-box;
+        }
+    }
+}
+
+.table_add {
+    margin-top: 6px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+    color: #2E73FE;
+    text-align: center;
+    border: 1px dashed #2E73FE;
+    cursor: pointer;
+
+}
+
+.form_item_flex {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+:deep(.form_item_flex .el-form-item) {
+    width: 40%;
+}
+
+:deep(.el-select) {
+    width: 100%;
+}
+
+.upload-demo {
+    button {
+        color: #165DFF;
+        margin-right: 10px;
+    }
+}
+</style>
