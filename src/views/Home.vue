@@ -2,12 +2,25 @@
 import { ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import * as taskCount from '@/axios/api/taskCount';
+import { emit, listen as rustListen } from '@tauri-apps/api/event'
+import { Emit, Listen } from '@/command/rustEvent'
+
 
 onBeforeMount(() => {
     getMatterOverview();
+    rustListen(Listen.get_system_info,ev=>{
+        console.log(Listen.get_system_info, ev.payload);
+    })
 })
 
 const router = useRouter();
+
+
+
+function greet(){
+    // emit(Emit.greet ,{name:"hello event"})
+    emit(Emit.get_system_info);
+}
 
 
 interface MatterOverItem {
@@ -115,7 +128,7 @@ function navigator(path: string, query?:Record<string,any>) {
                         </div>
                     </el-col>
                     <el-col :lg="8" :md="12" :sm="24">
-                        <div class="shortcut-item">
+                        <div class="shortcut-item" @click="greet">
                             <img width="208px" height="192px" src="../assets/images/更多.png" style="height:100%;width:auto;" alt="">
                             <div class="shortcut-item-text">
                                 <p style="font-weight: 500; color:#262626;">敬请期待</p>

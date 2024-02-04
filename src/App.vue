@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import {ref, onBeforeMount, onMounted} from "vue";
 import {invoke} from "@tauri-apps/api";
-import {appWindow,WebviewWindow} from '@tauri-apps/api/window'
+import {appWindow,} from '@tauri-apps/api/window'
 
 import { RouterView } from 'vue-router';
 import Menu from '@/components/Menu.vue';
 import {getUserInfo, type UserInfo} from "@/axios/auth";
 import {userStorage} from "@/utils/localforage";
-import {RustCommand} from "@/command/rustCommand";
+import {RustCommand, type RustCommandReturnType} from "@/command/rustCommand";
 
 onBeforeMount(()=>{
   // if(!isDev.value) login()
-  invoke(RustCommand.greet,{name:'hello world'}).then(res=>{
+  invoke<RustCommandReturnType['greet']>(RustCommand.greet,{name:'hello world'}).then(res=>{
     console.log(res)
   })
 })
 
-onMounted(()=>{
-    invoke(RustCommand.close_splashscreen);
-    stopDefaultContextMenu();
+onMounted( async()=>{
+  await  invoke<RustCommandReturnType['close_splashscreen']>(RustCommand.close_splashscreen);
+    // stopDefaultContextMenu();
 })
 
 const isDev = ref(import.meta.env.DEV||import.meta.env.MODE==='test')

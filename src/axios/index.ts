@@ -4,7 +4,7 @@ import type { AxiosRequestConfig, AxiosResponse, AxiosHeaderValue } from 'axios'
 import axiosTauriApiAdapter from 'axios-tauri-api-adapter';
 import { ElMessage } from 'element-plus';
 import {invoke} from '@tauri-apps/api'
-import {RustCommand} from "@/command/rustCommand";
+import {RustCommand, type RustCommandReturnType} from "@/command/rustCommand";
 
 
 const axios = Axios.create({
@@ -18,7 +18,7 @@ axios.interceptors.response.use(
     async response => {
         try {
             let log_axios_message:string = `url: ${response.config.baseURL}${response.config.url} \t request: ${JSON.stringify(response.config.data)} \t response: ${JSON.stringify(response.data)}`;
-            await invoke(RustCommand.log_axios_message,{message:log_axios_message});
+            await invoke<RustCommandReturnType['log_axios_message']>(RustCommand.log_axios_message,{message:log_axios_message});
             if (response.data.data && response.data.data.code) {
                 ElMessage.error('服务器错误')
                 return Promise.reject(response.data.data.msg)

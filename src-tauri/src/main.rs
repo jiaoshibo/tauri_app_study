@@ -3,6 +3,7 @@
 
 mod console;
 mod utils;
+mod event;
 
 use utils::{close_splashscreen, create_menu, log_axios_message, set_window_shadow};
 
@@ -17,6 +18,8 @@ fn main() {
         .menu(create_menu())
         .setup(|app| {
             set_window_shadow(app);
+            event::listen_greet(app);
+            event::listen_system_type(app);
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![

@@ -23,16 +23,19 @@ pub fn create_menu() -> Menu {
 
 #[tauri::command]
 pub fn close_splashscreen(window: Window) {
-    window
-        .get_window("splashscreen")
-        .expect("no window label 'splashscreen' found")
-        .close()
-        .unwrap();
-    window
-        .get_window("main")
-        .expect("no window label 'main' found")
-        .show()
-        .unwrap();
+    // 先判断开屏页面是否存在
+    if window.get_window("splashscreen").is_some() {
+        window
+            .get_window("splashscreen")
+            .expect("no window label 'splashscreen' found")
+            .close()
+            .unwrap();
+        window
+            .get_window("main")
+            .expect("no window label 'main' found")
+            .show()
+            .unwrap();
+    };
 }
 
 pub fn set_window_shadow<R: Runtime>(app: &tauri::App<R>) {
